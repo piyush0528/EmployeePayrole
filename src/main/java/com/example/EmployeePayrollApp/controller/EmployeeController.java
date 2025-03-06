@@ -1,5 +1,5 @@
 package com.example.EmployeePayrollApp.controller;
-
+import com.example.EmployeePayrollApp.dto.EmployeeDTO;
 import com.example.EmployeePayrollApp.model.Employee;
 import com.example.EmployeePayrollApp.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,18 +29,19 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public Employee createEmployee(@RequestBody Employee employee) {
+    public Employee createEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        Employee employee = new Employee();
+        employee.setName(employeeDTO.getName());
+        employee.setSalary(employeeDTO.getSalary());
         return employeeRepository.save(employee);
     }
 
 
     @PutMapping("/{id}")
-    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
+    public Employee updateEmployee(@PathVariable Long id, @RequestBody EmployeeDTO employeeDTO) {
         return employeeRepository.findById(id).map(employee -> {
-            employee.setName(updatedEmployee.getName());
-            employee.setEmail(updatedEmployee.getEmail());
-            employee.setDepartment(updatedEmployee.getDepartment());
-            employee.setSalary(updatedEmployee.getSalary());
+            employee.setName(employeeDTO.getName());
+            employee.setSalary(employeeDTO.getSalary());
             return employeeRepository.save(employee);
         }).orElse(null);
     }
