@@ -1,5 +1,6 @@
 package com.example.EmployeePayrollApp.service;
 
+import com.example.EmployeePayrollApp.interfaces.IemployeeService;
 import com.example.EmployeePayrollApp.model.Employee;
 import com.example.EmployeePayrollApp.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EmployeeService {
+public class EmployeeService implements IemployeeService {
     private final EmployeeRepository employeeRepository;
 
     @Autowired
@@ -17,18 +18,22 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
+    @Override
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
 
+    @Override
     public Optional<Employee> getEmployeeById(Long id) {
         return employeeRepository.findById(id);
     }
 
+    @Override
     public Employee createEmployee(Employee employee) {
         return employeeRepository.save(employee);
     }
 
+    @Override
     public Optional<Employee> updateEmployee(Long id, Employee updatedEmployee) {
         return employeeRepository.findById(id).map(employee -> {
             employee.setName(updatedEmployee.getName());
@@ -39,6 +44,7 @@ public class EmployeeService {
     }
 
     // Delete an employee
+    @Override
     public void deleteEmployee(Long id) {
         employeeRepository.deleteById(id);
     }

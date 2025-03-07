@@ -1,4 +1,5 @@
 package com.example.EmployeePayrollApp.controller;
+import com.example.EmployeePayrollApp.interfaces.IemployeeService;
 import com.example.EmployeePayrollApp.service.EmployeeService;
 import com.example.EmployeePayrollApp.model.Employee;
 import com.example.EmployeePayrollApp.repository.EmployeeRepository;
@@ -12,7 +13,8 @@ import java.util.Optional;
 @RequestMapping("/employees")
 public class EmployeeController {
 
-    private final EmployeeService employeeService;
+    @Autowired
+    IemployeeService employeeService;
 
     @Autowired
     public EmployeeController(EmployeeService employeeService) {
